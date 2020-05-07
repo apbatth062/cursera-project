@@ -4,7 +4,7 @@ import Dishdetail from "./DishdetailComponent";
 
 class Menu extends Component {
 
- 
+ //added props
     constructor(props){
         super(props);
         this.state = {
@@ -13,29 +13,29 @@ class Menu extends Component {
     }
 
     
-    OnDishSelect(dish){
+    OnDishSelect(dishes){
         
-        this.setState({selectedDish:dish})
+        this.setState({selectedDish:dishes})
     }
 
 
     render(){
-
-        const menu = this.props.dishes.map((dish) =>{
+    //storing details in menu
+        const menu = this.props.dishes.map((dishes) =>{
             return(
-                <div key={dish.id} className="col-12 col-md-5 m-1">
-                    <Card onClick={()=>this.OnDishSelect(dish)} >
+                <div key={dishes.id} className="col-12 col-md-5 m-1">
+                    <Card onClick={()=>this.OnDishSelect(dishes)} >
 
-                        <CardImg width="100%" src={dish.image} alt={dish.name} />
+                        <CardImg width="100%" src={dishes.image} alt={dishes.name} />
 
                         <CardImgOverlay>
-                            <CardTitle>{dish.name}</CardTitle>
+                            <CardTitle>{dishes.name}</CardTitle>
                         </CardImgOverlay>
                     </Card>
                 </div>
             )
         });
-
+     //returning the required output
         return(
             <div className="container">
 
