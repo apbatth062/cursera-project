@@ -11,7 +11,7 @@ function About(props) {
         );
     });
    
-    //Added fuvtion fot rendering leader
+    //Added function for rendering leader
     function RenderLeader({leader}) {
       
         return(
@@ -30,7 +30,7 @@ function About(props) {
         }
 
 
-
+  //added reactsrap classes for rsponsive design
     return(
         <div className="container">
             <div className="row">
