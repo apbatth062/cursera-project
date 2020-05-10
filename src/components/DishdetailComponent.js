@@ -10,50 +10,40 @@ class Dishdetail extends Component {
         }
     }
 
-    formatDate({ date }) {
-        return new Date(date).toLocaleDateString("en-US", {
-          year: "numeric",
-          month: "short",
-          day: "numeric"
-        });
-      }
-
- 
-    renderDish(dishes) {
-      
-        if (dishes != null) {
+   
+    renderDish(dish) {
+        if (dish != null) {
             return(
-                <Card>
-                    <CardImg width="100%" src={dishes.image} alt={dishes.name} />
-                    <CardBody>
-                        <CardTitle>{dishes.name}</CardTitle>
-                        <CardText>{dishes.description}</CardText>
-                    </CardBody>
-                </Card>
+                <div className="col-12 col-md-5 m-1">
+                    <Card>
+                        <CardImg width="100%" src={dish.image} alt={dish.name} />
+                        <CardBody>
+                            <CardTitle>{dish.name}</CardTitle>
+                            <CardText>{dish.description}</CardText>
+                        </CardBody>
+                    </Card>
+                </div>
             )
         }
         else{
             return(
-                <div><h6>there is no detail</h6></div>
+                <div></div>
             )
         }
     }
 
-    renderComments(cmnt){
-      //maping values of comment in list
-        if (cmnt != null) {
-             
-            let list = cmnt.map((cmnt)=>{
+    renderComments(comment){
+        
+        if (comment != null) {
 
-            
-                let date = cmnt.date
-               
+            let list = comment.map((comment)=>{
 
                 return(
-                    <li key={cmnt.id} >
+                    <li key={comment.id} >
                         <div>
-                            <p>{cmnt.comment}</p>
-                            <p>--{cmnt.author},{this.formatDate({date})}</p>
+                            <p>{comment.comment}</p>
+                            <p>--{comment.author},
+                            {new Intl.DateTimeFormat('en-US', { year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(Date.parse(comment.date)))}</p>
                         </div>
                     </li>
 
@@ -61,34 +51,32 @@ class Dishdetail extends Component {
             })
 
             return(
-                <div>
-                    <h4>Comments</h4>
-                    <ul className="list-unstyled">
-                        {list}
-                    </ul>
-                </div>
+                    <div className="col-12 col-md-5 m-1">
+                        <h4>Comments</h4>
+                        <ul className="list-unstyled">
+                            {list}
+                        </ul>
+                    </div>
             )
         }
         else{
             return(
-                <div><h6>There are no comments</h6></div>
+                <div></div>
             )
         }
     }
 
     render(){
 
-       
-        const {dishSelect} = this.props;
-        console.log(dishSelect);
+      
+        const {dish} = this.props;
+        console.log(this.props);
 
-        return dishSelect?(
-            <div className="row">
-                <div className="col-12 col-md-5 m-1">
-                    {this.renderDish(dishSelect)}
-                </div>
-                <div className="col-12 col-md-5 m-1">
-                    {this.renderComments(dishSelect.comments)}
+        return dish?(
+            <div className="container">
+                <div className="row">
+                        {this.renderDish(dish)}
+                        {this.renderComments(dish.comments)}
                 </div>
             </div>
         ):(
