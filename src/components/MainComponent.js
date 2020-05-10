@@ -1,15 +1,19 @@
 import React, { Component } from 'react';
-import { Navbar, NavbarBrand } from 'reactstrap';
+//import { Navbar, NavbarBrand } from 'reactstrap';
+import Menu from './MenuComponent';
 import Home from './HomeComponent';
+
 import Header from './HeaderComponent';
 import Footer from './FooterComponent';
-import Menu from './MenuComponent';
 import DishDetail from './DishdetailComponent';
-import { DISHES } from '../shared/dishes';
+
 import Contact from './ContactComponent';
+import About from './AboutComponent';
+import { DISHES } from '../shared/dishes';
 import { COMMENTS } from '../shared/comments';
-import { PROMOTIONS } from '../shared/promotions';
 import { LEADERS } from '../shared/leaders';
+import { PROMOTIONS } from '../shared/promotions';
+
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 
@@ -17,30 +21,28 @@ class Main extends Component {
 
   constructor(props) {
     super(props);
+    //state for dishes,comments,promotion,leaders;
     this.state = {
         dishes: DISHES,
         comments: COMMENTS,
-        promotions: PROMOTIONS,
-        leaders: LEADERS
+        leaders: LEADERS,
+        promotions: PROMOTIONS
+        
     };
   }
-
-  // onDishSelect(dishId) {
-  //   this.setState({ selectedDish: dishId});
-  // }
 
   render() {
 
 
-    const DishWithId = ({match}) => {
+    const DishId = ({matches}) => {
       return(
-          <DishDetail dish={this.state.dishes.filter((dish) => dish.id === parseInt(match.params.dishId,10))[0]}
-            comments={this.state.comments.filter((comment) => comment.dishId === parseInt(match.params.dishId,10))} />
+          <DishDetail dish={this.state.dishes.filter((dish) => dish.id === parseInt(matches.params.dishId,10))[0]}
+            comments={this.state.comments.filter((comment) => comment.dishId === parseInt(matches.params.dishId,10))} />
       );
     };
 
-
-    const HomePage = () => {
+   //homepage
+    const HomePages = () => {
       return(
         <Home
         dish={this.state.dishes.filter((dish) => dish.featured)[0]}
@@ -49,14 +51,15 @@ class Main extends Component {
       />
       );
     }
-
+ //clicking on component will open static page
     return (
       <div>
         <Header/>
         <Switch>
-          <Route path='/home' component={HomePage} />
+          <Route path='/home' component={HomePages} />
           <Route exact path='/menu' component={() => <Menu dishes={this.state.dishes} />} />
-          <Route path='/menu/:dishId' component={DishWithId} />
+          <Route path='/menu/:dishId' component={DishId} />
+          <Route path='/aboutus' component={() => <About leader= {this.state.leaders}></About>} />
           <Route exact path='/contactus' component={Contact} />
           <Redirect to="/home" />
         </Switch>
